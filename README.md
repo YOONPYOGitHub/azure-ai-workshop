@@ -21,6 +21,10 @@
 curl -LsSf https://astral.sh/uv/install.sh | sh
 export PATH="$HOME/.local/bin:$PATH"
 
+# Alpine Linux인 경우 (코드스페이스 등) 빌드 종속성 설치
+sudo apk update
+sudo apk add build-base linux-headers python3-dev
+
 # 가상환경 생성 및 활성화
 uv venv .venv --python 3.12 --seed
 source .venv/bin/activate

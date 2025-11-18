@@ -15,20 +15,24 @@ Codespace가 시작되면 자동으로 다음 작업들이 수행됩니다:
 ```bash
 # 1. uv 설치 (이미 설치되어 있을 수 있음)
 curl -LsSf https://astral.sh/uv/install.sh | sh
+export PATH="$HOME/.local/bin:$PATH"
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
-source ~/.bashrc
 
 # 2. 버전 확인
 uv --version
 
-# 3. 가상환경 생성 및 활성화
+# 3. 🔥 Alpine 전용 빌드 종속성 설치 (중요!)
+sudo apk update
+sudo apk add build-base linux-headers python3-dev
+
+# 4. 가상환경 생성 및 활성화
 uv venv .venv --python 3.12 --seed
 source .venv/bin/activate
 
-# 4. 의존성 설치
+# 5. 의존성 설치
 uv pip install -e .
 
-# 5. Jupyter kernel 등록
+# 6. Jupyter kernel 등록
 python -m ipykernel install --user --name azure-ai-workshop --display-name "Python (.venv)"
 ```
 
