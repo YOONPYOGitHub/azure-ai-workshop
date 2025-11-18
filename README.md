@@ -12,12 +12,24 @@
 3. Azure OpenAI 자격 증명으로 `.env` 파일을 업데이트하세요
 4. 노트북 탐색을 시작하세요!
 
+> **참고**: Codespace 설정 중 문제가 발생하면 [Codespace 가이드](.devcontainer/CODESPACE_GUIDE.md)를 참조하세요.
+
 ### 수동 로컬 설정:
 
 ```bash
+# uv 설치
+curl -LsSf https://astral.sh/uv/install.sh | sh
+export PATH="$HOME/.local/bin:$PATH"
+
+# 가상환경 생성 및 활성화
 uv venv .venv --python 3.12 --seed
 source .venv/bin/activate
-uv pip install -r pyproject.toml
+
+# 의존성 설치
+uv pip install -e .
+
+# Jupyter kernel 등록
+python -m ipykernel install --user --name azure-ai-workshop --display-name "Python (.venv)"
 ```
 
 ## 환경설정

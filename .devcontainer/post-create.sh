@@ -6,6 +6,11 @@ echo "🔧 Post-create setup for Azure AI Workshop..."
 # Ensure uv is in PATH
 export PATH="$HOME/.local/bin:$PATH"
 
+# Add to bashrc if not already there
+if ! grep -q '.local/bin' ~/.bashrc; then
+    echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+fi
+
 # Create virtual environment with Python 3.12
 echo "📦 Creating Python virtual environment..."
 uv venv .venv --python 3.12 --seed
@@ -16,6 +21,10 @@ source .venv/bin/activate
 # Install dependencies from pyproject.toml
 echo "📚 Installing Python dependencies..."
 uv pip install -e .
+
+# Install Jupyter kernel
+echo "🔧 Installing Jupyter kernel..."
+python -m ipykernel install --user --name azure-ai-workshop --display-name "Python (.venv)"
 
 # Install additional development dependencies
 echo "🛠️  Installing development tools..."
