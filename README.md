@@ -16,12 +16,14 @@
 
 ### 수동 로컬 설정:
 
+#### Linux / macOS / WSL
+
 ```bash
 # uv 설치
 curl -LsSf https://astral.sh/uv/install.sh | sh
 export PATH="$HOME/.local/bin:$PATH"
 
-# Alpine Linux인 경우 (코드스페이스 등) 빌드 종속성 설치
+# Alpine Linux인 경우 (Codespaces 등) 빌드 종속성 설치
 sudo apk update
 sudo apk add build-base linux-headers python3-dev
 
@@ -34,6 +36,32 @@ uv pip install -e .
 
 # Jupyter kernel 등록
 python -m ipykernel install --user --name azure-ai-workshop --display-name "Python (.venv)"
+```
+
+#### Windows PowerShell
+
+```powershell
+# uv 설치
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+# 새 터미널을 열거나 PATH 반영 후 버전 확인
+uv --version
+
+# 가상환경 생성 및 활성화
+uv venv .venv --python 3.12 --seed
+.venv\Scripts\Activate.ps1
+
+# 의존성 설치
+uv pip install -e .
+
+# Jupyter kernel 등록
+python -m ipykernel install --user --name azure-ai-workshop --display-name "Python (.venv)"
+```
+
+PowerShell에서 가상환경 활성화가 실행 정책 때문에 막히면 아래 명령을 한 번 실행한 뒤 다시 활성화하세요.
+
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 ```
 
 ## 환경설정
