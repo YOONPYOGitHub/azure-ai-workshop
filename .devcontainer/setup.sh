@@ -20,7 +20,6 @@ else
         jq \
         wget \
         unzip \
-        software-properties-common \
         apt-transport-https \
         ca-certificates \
         gnupg \
@@ -32,10 +31,18 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 export PATH="$HOME/.local/bin:$PATH"
 
 # Install Azure CLI
-curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+if ! command -v az >/dev/null 2>&1; then
+    echo "☁️  Installing Azure CLI..."
+    if ! curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash; then
+        echo "⚠️  Azure CLI installation failed; continuing because it is optional for notebooks 01-07."
+    fi
+else
+    echo "☁️  Azure CLI already installed."
+fi
 
-# Install Node.js (for potential web components)
-curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-sudo apt-get install -y nodejs
+# Node.js is installed by the devcontainer feature in devcontainer.json.
+if command -v node >/dev/null 2>&1; then
+    echo "🟢 Node.js already installed: $(node --version)"
+fi
 
 echo "✅ Setup completed!"
